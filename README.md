@@ -14,5 +14,6 @@
           for example: time java CheckTrueFalse my_wampus_rules.txt my_kb.txt my_statement.txt
           
 ###Note
-        Wumpus world rules and sample knowledge base has been peovided in 'input' folder for trial purpose.
+        Wumpus world rules (my_wampus_rules.txt) and other sample knowledge base has been included in 'Input' folder for     
+        trial purpose.
 
