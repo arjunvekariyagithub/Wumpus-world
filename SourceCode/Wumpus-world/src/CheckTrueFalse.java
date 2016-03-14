@@ -59,8 +59,6 @@ public class CheckTrueFalse {
                     checkAndInitializeSymbolValue(buffer); // B_2_3 or (not M_2_3)
                     LogicalExpression subExpression = readExpression(buffer);
                     knowledge_base.setSubexpression(subExpression);
-                } else {
-                    // the line is a comment. do nothing and read the next line
                 }
             }
 
@@ -90,8 +88,6 @@ public class CheckTrueFalse {
                     checkAndInitializeSymbolValue(buffer); // B_2_3 or (not M_2_3)
                     LogicalExpression subExpression = readExpression(buffer);
                     knowledge_base.setSubexpression(subExpression);
-                } else {
-                    // the line is a comment. do nothing and read the next line
                 }
             }
 
@@ -119,8 +115,6 @@ public class CheckTrueFalse {
             inputStream = new BufferedReader(new FileReader(args[2]));
 
             System.out.println("\n\nLoading the statement file...");
-            // buffer = inputStream.readLine();
-
             // actually read the statement file
             // assuming that the statement file is only one line long
             while ((buffer = inputStream.readLine()) != null) {
@@ -128,8 +122,6 @@ public class CheckTrueFalse {
                     // the line is not a comment
                     statement = readExpression(buffer);
                     break;
-                } else {
-                    // the line is a commend. no nothing and read the next line
                 }
             }
 
@@ -153,51 +145,6 @@ public class CheckTrueFalse {
         statement.print_expression("");
         // print a new line
         System.out.println("\n");
-
-        // read for negation of statement
-        // try {
-        // inputStream = new BufferedReader(new FileReader(args[2]));
-        //
-        // System.out.println("\n\nLoading the statement file for negation...");
-        // negation_statement.setConnective("not");
-        // // buffer = inputStream.readLine();
-        //
-        // // actually read the statement file
-        // // assuming that the statement file is only one line long
-        // while ((buffer = inputStream.readLine()) != null) {
-        // if (!buffer.startsWith("#")) {
-        // // the line is not a comment
-        // negation_statement = readExpression(buffer);
-        // break;
-        // } else {
-        // // the line is a commend. no nothing and read the next line
-        // }
-        // }
-        //
-        // // close the input file
-        // inputStream.close();
-        //
-        // } catch (Exception e) {
-        // System.out.println("failed to open " + args[2]);
-        // e.printStackTrace();
-        // exit_function(0);
-        // }
-        // // end reading the statement file
-        //
-        // // check for a valid statement
-        // if (!valid_expression(negation_statement)) {
-        // System.out.println("invalid negation_statement");
-        // exit_function(0);
-        // }
-        //
-        // // print the statement
-        // negation_statement.print_expression("");
-        // // print a new line
-        // System.out.println("\n");
-
-        // print symbol values
-        // my testing
-        // print_symbol_values();
 
         // print a new line
         System.out.println("\n");
@@ -262,29 +209,11 @@ public class CheckTrueFalse {
         } else {
             String P = symbols.remove(0);
             ArrayList<String> rest = new ArrayList<String>(symbols);
-            // my testing
-            // System.out.println("P  -> " + P);
 
             return TT_Check_All(knowledge_base, alpha, rest, EXTENDS(P, true, model))
                 && TT_Check_All(knowledge_base, alpha, rest, EXTENDS(P, false, model));
         }
     }
-
-    // private static boolean print_false(ArrayList<String> symbols, ArrayList<String> rest) {
-    // // TODO Auto-generated method stub
-    // // System.out.println("print_false() - symbols -> " + symbols);
-    // // System.out.println("print_false() - rest -> " + rest);
-    //
-    //
-    // return true;
-    // }
-    //
-    // private static boolean print_true(ArrayList<String> symbols, ArrayList<String> rest) {
-    // // TODO Auto-generated method stub
-    // // System.out.println("print_true() - symbols -> " + symbols);
-    // // System.out.println("print_true() - rest -> " + rest);
-    // return true;
-    // }
 
     /**
      * This function implements ETENDS() method of 'Entailment' algorithm. it assigns true or false value to given symbol
@@ -314,14 +243,7 @@ public class CheckTrueFalse {
         boolean isComputingNegationStatement) {
         // TODO Auto-generated method stub
 
-        // my testing
-        // System.out.println(counter++ + ") CHECK FOR MODEL  -> " + model);
-        // System.out.println();
-
         boolean result = logical_statement.solve_expressions(model);
-
-        // my testing
-        // System.out.println("PL_TRUE() - result  -> " + result);
 
         LogicalExpression.clearStack();
 
@@ -374,9 +296,6 @@ public class CheckTrueFalse {
                 }
             }
         }
-        // my testing
-        // System.out.println("NO OF UNKNOWNS  -> " + model.size());
-
     }
 
     /**
@@ -488,8 +407,6 @@ public class CheckTrueFalse {
     public static boolean getValueFromArray(String symbol) {
         // TODO Auto-generated method stub
 
-        // my testing
-        // System.out.println("getValueFromArray() - symbol -> " + symbol);
         String symbol_initials = null;
         String[] symbol_literals = new String[3];
 
@@ -539,11 +456,6 @@ public class CheckTrueFalse {
     public static LogicalExpression readExpression(String input_string) {
         LogicalExpression result = new LogicalExpression();
 
-        // testing
-        // System.out.println("readExpression() beginning -"+ input_string +"-");
-        // testing
-        // System.out.println("\nread_exp");
-
         // trim the whitespace off
         input_string = input_string.trim();
 
@@ -554,10 +466,6 @@ public class CheckTrueFalse {
 
             // remove the '(' from the input string
             symbolString = input_string.substring(1);
-            // symbolString.trim();
-
-            // testing
-            // System.out.println("readExpression() without opening paren -" + symbolString + "-");
 
             if (!symbolString.endsWith(")")) {
                 // missing the closing paren - invalid expression
@@ -570,16 +478,8 @@ public class CheckTrueFalse {
                 symbolString = symbolString.substring(0, (symbolString.length() - 1));
                 symbolString.trim();
 
-                // testing
-                // System.out.println("readExpression() without closing paren -" + symbolString + "-");
-
                 // read the connective into the result LogicalExpression object
                 symbolString = result.setConnective(symbolString);
-
-                // testing
-                // System.out.println("added connective:-" + result.getConnective() + "-: here is the string that is left -" +
-                // symbolString + "-:");
-                // System.out.println("added connective:->" + result.getConnective() + "<-");
             }
 
             // read the subexpressions into a vector and call setSubExpressions( Vector );
@@ -589,9 +489,6 @@ public class CheckTrueFalse {
             // the next symbol must be a unique symbol
             // if the unique symbol is not valid, the setUniqueSymbol will tell us.
             result.setUniqueSymbol(input_string);
-
-            // testing
-            // System.out.println(" added:-" + input_string + "-:as a unique symbol: readExpression()" );
         }
 
         return result;
@@ -612,27 +509,15 @@ public class CheckTrueFalse {
         LogicalExpression newExpression;// = new LogicalExpression();
         String newSymbol = new String();
 
-        // testing
-        // System.out.println("reading subexpressions! beginning-" + input_string +"-:");
-        // System.out.println("\nread_sub");
-
         input_string.trim();
 
         while (input_string.length() > 0) {
 
             newExpression = new LogicalExpression();
 
-            // testing
-            // System.out.println("read subexpression() entered while with input_string.length ->" + input_string.length()
-            // +"<-");
-
             if (input_string.startsWith("(")) {
                 // its a subexpression.
                 // have readExpression parse it into a LogicalExpression object
-
-                // testing
-                // System.out.println("read_subexpression() entered if with: ->" + input_string + "<-");
-
                 // find the matching ')'
                 int parenCounter = 1;
                 int matchingIndex = 1;
@@ -648,10 +533,6 @@ public class CheckTrueFalse {
                 // read untill the matching ')' into a new string
                 newSymbol = input_string.substring(0, matchingIndex);
 
-                // testing
-                // System.out.println( "-----read_subExpression() - calling readExpression with: ->" + newSymbol +
-                // "<- matchingIndex is ->" + matchingIndex );
-
                 // pass that string to readExpression,
                 newExpression = readExpression(newSymbol);
 
@@ -663,7 +544,6 @@ public class CheckTrueFalse {
 
             } else {
                 // its a unique symbol ( if its not, setUniqueSymbol() will tell us )
-
                 // I only want the first symbol, so, create a LogicalExpression object and
                 // add the object to the vector
 
@@ -671,35 +551,13 @@ public class CheckTrueFalse {
                     // remove the first string from the string
                     newSymbol = input_string.substring(0, input_string.indexOf(" "));
                     input_string = input_string.substring((newSymbol.length() + 1), input_string.length());
-
-                    // testing
-                    // System.out.println( "read_subExpression: i just read ->" + newSymbol + "<- and i have left ->" +
-                    // input_string +"<-" );
                 } else {
                     newSymbol = input_string;
                     input_string = "";
                 }
-
-                // testing
-                // System.out.println( "readSubExpressions() - trying to add -" + newSymbol + "- as a unique symbol with ->" +
-                // input_string + "<- left" );
-
                 newExpression.setUniqueSymbol(newSymbol);
-
-                // testing
-                // System.out.println("readSubexpression(): added:-" + newSymbol +
-                // "-:as a unique symbol. adding it to the vector" );
-
                 symbolList.add(newExpression);
-
-                // testing
-                // System.out.println("read_subexpression() - after adding: ->" + newSymbol + "<- i have left ->"+ input_string
-                // + "<-");
-
             }
-
-            // testing
-            // System.out.println("read_subExpression() - left to parse ->" + input_string + "<-beforeTrim end of while");
 
             input_string.trim();
 
@@ -707,10 +565,6 @@ public class CheckTrueFalse {
                 // remove the leading whitespace
                 input_string = input_string.substring(1);
             }
-
-            // testing
-            // System.out.println("read_subExpression() - left to parse ->" + input_string + "<-afterTrim with string length-" +
-            // input_string.length() + "<- end of while");
         }
         return symbolList;
     }
@@ -728,9 +582,6 @@ public class CheckTrueFalse {
         if (!(expression.getUniqueSymbol() == null) && (expression.getConnective() == null)) {
             // we have a unique symbol, check to see if its valid
             return valid_symbol(expression.getUniqueSymbol());
-
-            // testing
-            // System.out.println("valid_expression method: symbol is not empty!\n");
         }
 
         // symbol is empty, so
@@ -778,10 +629,6 @@ public class CheckTrueFalse {
                 return false;
             }
         }
-
-        // testing
-        // System.out.println("The expression is valid");
-
         // if the method made it here, the expression must be valid
         return true;
     }
@@ -793,10 +640,6 @@ public class CheckTrueFalse {
     // public long valid_symbol( String symbol ) {
     public static boolean valid_symbol(String symbol) {
         if (symbol == null || (symbol.length() == 0)) {
-
-            // testing
-            // System.out.println("String: " + symbol + " is invalid! Symbol is either Null or the length is zero!\n");
-
             return false;
         }
 
@@ -824,10 +667,6 @@ public class CheckTrueFalse {
      * */
     private static void evaluateFinalResult(boolean tt_entails_alpha, boolean tt_entails_negation_alpha) {
         // TODO Auto-generated method stub
-        // my testing
-        // System.out.println("TT_ENTAILS_ALPHA -> " + tt_entails_alpha);
-        // System.out.println("TT_ENTAILS_NEGATION_OF_ALPHA -> " + tt_entails_negation_alpha);
-
         String decision = "I don't know if the statement is definitely true or definitely false.";
         if (tt_entails_alpha && !tt_entails_negation_alpha) {
             decision = "definitely true";
