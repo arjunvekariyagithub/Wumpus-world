@@ -14,9 +14,6 @@ public class LogicalExpression {
 
     // constructor
     public LogicalExpression() {
-        // these need to stay null if they're empty
-        // this.uniqueSymbol = "0";
-        // this.connective = "0";
         this.subexpressions = new Vector<LogicalExpression>();
     }
 
@@ -57,8 +54,6 @@ public class LogicalExpression {
                 + this.uniqueSymbol + "<- for ->" + newSymbol + "<-\n");
         } else if (valid) {
             this.uniqueSymbol = newSymbol;
-            // testing
-            // System.out.println(" setUniqueSymbol() - added-" + newSymbol + "- to the LogicalExpression! ");
         }
     }
 
@@ -70,10 +65,7 @@ public class LogicalExpression {
     public String setConnective(String inputString) {
 
         String connect;
-
-        // testing
-        // System.out.println("setConnective() - beginning -" + inputString + "-");
-
+        
         // trim the whitespace at the beginning of the string if there is any
         // there shouldn't be
         inputString.trim();
@@ -87,17 +79,10 @@ public class LogicalExpression {
             inputString.trim();
         }
 
-        // testing
-        // System.out.println("here: setConnective1- inputString:" + inputString + "--");
-
         if (inputString.contains(" ")) {
             // remove the connective out of the string
             connect = inputString.substring(0, inputString.indexOf(" "));
             inputString = inputString.substring((connect.length() + 1), inputString.length());
-            // inputString.trim();
-
-            // testing
-            // System.out.println("I have the connective -" + connect + "- and i've got symbols -" + inputString + "-");
 
         } else {
             // just set to get checked and empty the inputString
@@ -113,10 +98,6 @@ public class LogicalExpression {
 
             // set the connective
             this.connective = connect;
-
-            // testing
-            // System.out.println("setConnective(): I have just set the connective\n->" + connect + "<-\nand i'm returning\n->"
-            // + inputString + "<-");
 
             return inputString;
 
@@ -194,24 +175,11 @@ public class LogicalExpression {
         // System.out.println("solve_expressions() - model -> " + model);
 
         if (this.getUniqueSymbol() != null) {
-            // my testing
-            // System.out.println("solve_expressions() - pushing symbol on stack -> " + this.getUniqueSymbol());
-
             symbol_stack.push(this.getUniqueSymbol());
-
-            // my testing
-            // System.out.println("solve_expressions() - symbol_stack -> " + symbol_stack);
         } else {
             LogicalExpression nextExpression;
 
-            // my testing
-            // push the connective
-            // System.out.println("solve_expressions() - pushing connective on stack -> " + this.getConnective());
-
             symbol_stack.push(this.getConnective());
-
-            // my testing
-            // System.out.println("solve_expressions() - symbol_stack -> " + symbol_stack);
 
             // enumerate over the 'symbols' ( LogicalExpression objects ) and print them
             for (Enumeration e = this.subexpressions.elements(); e.hasMoreElements();) {
@@ -236,17 +204,12 @@ public class LogicalExpression {
     private boolean popUniqueSymbolsAndEvaluateResult(HashMap<String, Boolean> model) {
         // TODO Auto-generated method stub
 
-        // my testing
-        // System.out.println("popUniqueSymbolsAndEvaluateResult() - symbol_stack -> " + symbol_stack);
-
         ArrayList<String> uniqueSymbole = new ArrayList<String>();
         String symbol, connective;
         boolean result = false;
 
         do {
             symbol = symbol_stack.pop();
-            // my testing
-            // System.out.println("popUniqueSymbolsAndEvaluateResult() - poped symbol -> " + symbol);
             uniqueSymbole.add(symbol);
         } while (!isConnective(symbol));
 
@@ -337,8 +300,6 @@ public class LogicalExpression {
     public static void clearStack() {
         // TODO Auto-generated method stub
         if (symbol_stack != null) {
-            // my testing
-            // System.out.println("clearStack() - symbol_stack -> " + symbol_stack);
             symbol_stack.clear();
         }
     }
